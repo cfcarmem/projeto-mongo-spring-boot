@@ -1,11 +1,16 @@
 package projeto.mongo.sboot.domain;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 import java.util.Objects;
 
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
+
+import projeto.mongo.sboot.dto.AuthorDTO;
+import projeto.mongo.sboot.dto.UsersDTO;
 
 @Document
 public class Post implements Serializable{
@@ -19,18 +24,18 @@ public class Post implements Serializable{
 	private Date date;
 	private String title;
 	private String body;
-	private Users author;
+	private List<AuthorDTO> author = new ArrayList<>();
 	
 	public Post() {}
 	
 	
-	public Post(String id, Date date, String title, String body, Users author) {
+	public Post(String id, Date date, String title, String body, List<AuthorDTO> author) {
 		super();
 		this.id = id;
 		this.date = date;
 		this.title = title;
 		this.body = body;
-		this.author = author;
+		this.setAuthor(author);
 	}
 
 
@@ -62,14 +67,15 @@ public class Post implements Serializable{
 	}
 	
 
-	public Users getAuthor() {
+	public List<AuthorDTO> getAuthor() {
 		return author;
 	}
 
 
-	public void setAuthor(Users author) {
-		this.author = author;
+	public void setAuthor(List<AuthorDTO> author2) {
+		this.author = author2;
 	}
+
 	
 	@Override
 	public int hashCode() {
@@ -86,6 +92,7 @@ public class Post implements Serializable{
 		Post other = (Post) obj;
 		return Objects.equals(id, other.id);
 	}
+
 
 
 	

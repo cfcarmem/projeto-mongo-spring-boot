@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -48,9 +49,19 @@ public class UsersResource {
 	}
 	
 	@DeleteMapping(value="/{id}")
-	public ResponseEntity<Void> delete(@RequestBody String id){
+	public ResponseEntity<Void> delete(@PathVariable String id){
 		//converter DTO para Users
 		service.deletar(id);
+		//nocontent é o codigo 205
+		return ResponseEntity.noContent().build();
+	}
+	
+	@PutMapping(value="/{id}")
+	public ResponseEntity<Void> update(@PathVariable String id, @RequestBody UsersDTO objDTO){
+		//converter DTO para Users
+		Users obj = service.fromDTO(objDTO);
+		obj.setId(id);
+		service.update(obj);
 		//nocontent é o codigo 205
 		return ResponseEntity.noContent().build();
 	}

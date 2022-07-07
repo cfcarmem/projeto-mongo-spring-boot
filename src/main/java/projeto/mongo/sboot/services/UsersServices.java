@@ -43,5 +43,12 @@ public class UsersServices {
 		  repository.deleteById(id);
 	}
 	
+	public Users update(Users obj) {
+		//pegando o id no banco de dados.
+		Users novoUser = findById(obj.getId());
+		novoUser.setEmail(obj.getEmail());
+		novoUser.setName(obj.getName());
+		return repository.save(novoUser);
+	}
 
 }

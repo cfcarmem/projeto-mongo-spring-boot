@@ -3,26 +3,29 @@ package projeto.mongo.sboot.resources;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.util.Optional;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
 import projeto.mongo.sboot.domain.Users;
+import projeto.mongo.sboot.services.UsersServices;
 
 @RestController
 @RequestMapping(value="/users")
 public class UsersResource {
+	@Autowired
 
+	private UsersServices service;
+	
 	@GetMapping
 	public ResponseEntity<List<Users>> findAll(){
-		Users maria = new Users("1","Maria Costa", "cfcarmem@sti.com.br");
-		Users eraldo = new Users("1","eraldo Costa", "cferaldo@sti.com.br");
-		List<Users> lista = new ArrayList<>();
-		lista.addAll(Arrays.asList(maria,eraldo));
+		List<Users> lista = service.findAll();
 		return ResponseEntity.ok().body(lista);
 	}
+	
 	
 }

@@ -1,5 +1,6 @@
 package projeto.mongo.sboot.services;
 
+import java.util.Date;
 import java.util.List;
 import java.util.Optional;
 
@@ -30,5 +31,11 @@ public class PostServices {
 	
 	public List<Post> searchTitleQuery(String text){
 		return repo.findByTitleContainingIgnoreCase(text);
+	}
+	
+	public List<Post> fullSearchPost(String text, Date minDate, Date maxDate){
+		//somamos 1 dia na última data
+		maxDate = new Date(maxDate.getTime() + 24 * 60 * 60 * 1000);
+		return  repo.searchAvancada(text, minDate, maxDate);
 	}
 }

@@ -1,5 +1,6 @@
 package projeto.mongo.sboot.resources;
 
+import java.util.Date;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -12,9 +13,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import projeto.mongo.sboot.domain.Post;
-import projeto.mongo.sboot.domain.Users;
 import projeto.mongo.sboot.dto.PostsDTO;
-import projeto.mongo.sboot.dto.UsersDTO;
 import projeto.mongo.sboot.resources.util.URL;
 import projeto.mongo.sboot.services.PostServices;
 
@@ -46,6 +45,21 @@ public class PostResource {
 		List<Post> lista = service.searchTitleQuery(text);
 		return ResponseEntity.ok().body(lista);
 	}
+	
+	
+	@GetMapping(value="/findSearchFull")
+	//aqui nós criamos um método que está na documentação do Mongo. É busca por nome. Tem que implementar no Repositories.
+	public ResponseEntity<List<Post>> fullSearch(
+													@RequestParam(value="text", defaultValue="") String text
+												   ,@RequestParam(value="minDate", defaultValue = "") String minDate
+												   ,@RequestParam(value="maxDate", defaultValue="") String maxDate){
+		text = URL.decodeParam(text);
+		Date minima = URL.convertDate(minDate, new Date(0));
+		Date maxima = URL.convertDate(maxDate, new Date());
+		List<Post> lista = service.fullSearchPost(text, minima, maxima);
+		return ResponseEntity.ok().body(lista);
+	}
+	
 	
 
 }

@@ -27,4 +27,9 @@ public class PostServices {
 		 //depois de criar as exceções personalizadas, vamos retornar assim
 		 return obj.orElseThrow(() -> new ObjectNotFoundException("Objeto não encontrado."));
 	}
+	
+	
+	public List<Post> findByTitle(String text){
+		return repo.findByTitleContainingIgnoreCase(text);
+	}
 }

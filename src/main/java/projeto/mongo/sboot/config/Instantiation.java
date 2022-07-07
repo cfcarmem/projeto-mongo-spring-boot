@@ -10,10 +10,13 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.context.annotation.Configuration;
 
+import projeto.mongo.sboot.domain.Comment;
 import projeto.mongo.sboot.domain.Post;
 import projeto.mongo.sboot.domain.Users;
 import projeto.mongo.sboot.dto.AuthorDTO;
+import projeto.mongo.sboot.dto.CommentDTO;
 import projeto.mongo.sboot.dto.UsersDTO;
+import projeto.mongo.sboot.repositories.CommentRepository;
 import projeto.mongo.sboot.repositories.PostRepository;
 import projeto.mongo.sboot.repositories.UsersRepository;
 
@@ -24,6 +27,9 @@ public class Instantiation implements CommandLineRunner{
 	private UsersRepository usersRepository;
 	@Autowired
 	private PostRepository postRepository;
+	
+	@Autowired
+	private CommentRepository commentRepository;
 	
 	@Override
 	public void run(String... args) throws Exception {
@@ -56,10 +62,31 @@ public class Instantiation implements CommandLineRunner{
 	    p2.getAuthor().addAll(Arrays.asList(dtx2,dtx1));
 	    postRepository.save(p1);
 	    postRepository.save(p2);
-	   
 	    
 		maria.getPosts().addAll(Arrays.asList(p1,p2));
 		usersRepository.save(maria);
+		
+		commentRepository.deleteAll();
+		//comentários
+		Comment c1 = new Comment(null,"Aproveitem", sdf.parse("21/03/2018"),dtx);
+		Comment c2 = new Comment(null,"Boa Viagem Mano", sdf.parse("21/03/2018"),dtx2);
+		Comment c3 = new Comment(null,"Tenha um ótimo dia", sdf.parse("23/03/2018"),dtx1);
+		commentRepository.saveAll(Arrays.asList(c1,c2,c3));
+		
+		
+		CommentDTO dt1 = new CommentDTO(c1);
+		CommentDTO dt2 = new CommentDTO(c2);
+		CommentDTO dt3 = new CommentDTO(c3);
+		
+		//comentarios nos posts
+		
+		p1.getComment().addAll(Arrays.asList(dt1,dt2));
+		p2.getComment().addAll(Arrays.asList(dt3));
+		postRepository.saveAll(Arrays.asList(p1,p2));
+		
+		
+
+		
 	}
 	
 

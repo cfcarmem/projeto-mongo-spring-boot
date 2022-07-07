@@ -1,7 +1,9 @@
 package projeto.mongo.sboot.dto;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 
 import projeto.mongo.sboot.domain.Post;
 
@@ -16,6 +18,7 @@ public class PostsDTO implements Serializable{
 	private Date date;
 	private String title;
 	private String body;
+	private List<CommentDTO> comment = new ArrayList<>();
 	
 	public  PostsDTO() {
 	}
@@ -26,6 +29,7 @@ public class PostsDTO implements Serializable{
 		this.date = post.getDate();
 		this.title = post.getTitle();
 		this.body = post.getBody();
+		setComment(post.getComment());
 	}
 
 	public String getId() {
@@ -59,6 +63,15 @@ public class PostsDTO implements Serializable{
 	public void setBody(String body) {
 		this.body = body;
 	}
+
+	public List<CommentDTO> getComment() {
+		return comment;
+	}
+
+	public void setComment(List<CommentDTO> comment) {
+		this.comment = comment;
+	}
+
 	
 	
 

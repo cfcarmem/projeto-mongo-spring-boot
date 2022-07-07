@@ -10,6 +10,7 @@ import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 
 import projeto.mongo.sboot.dto.AuthorDTO;
+import projeto.mongo.sboot.dto.CommentDTO;
 import projeto.mongo.sboot.dto.UsersDTO;
 
 @Document
@@ -25,6 +26,7 @@ public class Post implements Serializable{
 	private String title;
 	private String body;
 	private List<AuthorDTO> author = new ArrayList<>();
+    private List<CommentDTO> comment = new ArrayList<>();
 	
 	public Post() {}
 	
@@ -74,6 +76,15 @@ public class Post implements Serializable{
 	public void setAuthor(List<AuthorDTO> author2) {
 		this.author = author2;
 	}
+	
+	public List<CommentDTO> getComment() {
+		return comment;
+	}
+
+
+	public void setComment(List<CommentDTO> comment) {
+		this.comment = comment;
+	}
 
 	
 	@Override
@@ -91,6 +102,9 @@ public class Post implements Serializable{
 		Post other = (Post) obj;
 		return Objects.equals(id, other.id);
 	}
+
+
+
 
 
 

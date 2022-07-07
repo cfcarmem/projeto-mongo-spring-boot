@@ -43,7 +43,7 @@ public class PostResource {
 	//aqui nós criamos um método que está na documentação do Mongo. É busca por nome. Tem que implementar no Repositories.
 	public ResponseEntity<List<Post>> findByTitulo(@RequestParam(value="text", defaultValue="") String text){
 		text = URL.decodeParam(text);
-		List<Post> lista = service.findByTitle(text);
+		List<Post> lista = service.searchTitleQuery(text);
 		return ResponseEntity.ok().body(lista);
 	}
 	

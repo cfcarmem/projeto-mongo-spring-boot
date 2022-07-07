@@ -28,10 +28,12 @@
 			<scope>test</scope>
 		</dependency>
 		
+		<!-- https://mvnrepository.com/artifact/org.mongodb/mongodb-jdbc -->
 		<dependency>
-			<groupId>org.springframework.boot</groupId>
+   			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-data-mongodb</artifactId>
 		</dependency>
+		
 		
 	</dependencies>
 

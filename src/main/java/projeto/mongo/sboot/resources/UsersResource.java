@@ -1,5 +1,6 @@
 package projeto.mongo.sboot.resources;
 
+import java.net.URI;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -7,8 +8,11 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 import projeto.mongo.sboot.domain.Users;
 import projeto.mongo.sboot.dto.UsersDTO;
@@ -32,6 +36,14 @@ public class UsersResource {
 	public ResponseEntity<UsersDTO> findbyId(@PathVariable String id){
 		Users obj = service.findById(id);
 		return ResponseEntity.ok().body(new UsersDTO(obj));
+	}
+	
+	@PostMapping
+	public ResponseEntity<Users> insert(@RequestBody UsersDTO usuarioDTO){
+		//converter DTO para Users
+		Users obj = service.fromDTO(usuarioDTO);
+		URI uri  = ServletUriComponentsBuilder.fromCurrentRequest().path("/{id}").buildAndExpand(obj.getId()).toUri();
+		return ResponseEntity.created(uri).body(service.insere(obj));
 	}
 	
 	

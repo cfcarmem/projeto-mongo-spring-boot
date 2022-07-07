@@ -1,6 +1,7 @@
 package projeto.mongo.sboot.resources;
 
 import java.net.URI;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -16,7 +17,9 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
+import projeto.mongo.sboot.domain.Post;
 import projeto.mongo.sboot.domain.Users;
+import projeto.mongo.sboot.dto.PostsDTO;
 import projeto.mongo.sboot.dto.UsersDTO;
 import projeto.mongo.sboot.services.UsersServices;
 
@@ -64,6 +67,18 @@ public class UsersResource {
 		service.update(obj);
 		//nocontent é o codigo 205
 		return ResponseEntity.noContent().build();
+	}
+	
+	@GetMapping(value="/postagens/{id}")
+	public ResponseEntity<List<PostsDTO>> postagens(@PathVariable String id,@RequestBody UsersDTO objDto){
+		Users usu = service.findById(id);
+		List<Post> usup = usu.getPosts();
+		List<PostsDTO> listagem = new ArrayList<>();
+		for(Post p: usup) {
+			PostsDTO dto = new PostsDTO(p);
+			listagem.add(dto);
+		}
+		return ResponseEntity.ok().body(listagem);
 	}
 	
 }

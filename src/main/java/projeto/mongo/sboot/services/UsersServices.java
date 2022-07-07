@@ -38,5 +38,10 @@ public class UsersServices {
 		return  repository.save(user);
 	}
 	
+	public void deletar(String id) {
+		//usar o Option da classe Optional para retornar 
+		  repository.deleteById(id);
+	}
+	
 
 }

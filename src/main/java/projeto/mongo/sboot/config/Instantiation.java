@@ -45,18 +45,21 @@ public class Instantiation implements CommandLineRunner{
 		AuthorDTO dtx = new AuthorDTO(maria) ;
 		AuthorDTO dtx1 = new AuthorDTO(alex) ;
 		AuthorDTO dtx2 = new AuthorDTO(bob) ;
-		List<AuthorDTO> listagem1 = new ArrayList<>();
-		listagem1.add(dtx);
-		listagem1.add(dtx1);
-		List<AuthorDTO> listagem2 = new ArrayList<>();
-		listagem2.add(dtx2);
 		
 		
 		postRepository.deleteAll();
-		Post p1 = new Post(null,sdf.parse("21/03/2018"), "Partiu viagems", "Vou viajar para EUA. Abs",listagem1);
-		Post p2 = new Post(null,sdf.parse("23/03/2018"), "Bom dia", "Acordei bem jhonson",listagem2);
-		
+		Post p1 = new Post(null,sdf.parse("21/03/2018"), "Partiu viagems", "Vou viajar para EUA. Abs");
+		Post p2 = new Post(null,sdf.parse("23/03/2018"), "Bom dia", "Acordei bem jhonson");
 		postRepository.saveAll(Arrays.asList(p1,p2));
+		 
+	    p1.getAuthor().addAll(Arrays.asList(dtx,dtx1));
+	    p2.getAuthor().addAll(Arrays.asList(dtx2,dtx1));
+	    postRepository.save(p1);
+	    postRepository.save(p2);
+	   
+	    
+		maria.getPosts().addAll(Arrays.asList(p1,p2));
+		usersRepository.save(maria);
 	}
 	
 
